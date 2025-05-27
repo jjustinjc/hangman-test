@@ -1,56 +1,27 @@
-import random, sys
-
+import sys
+import hangman_functions as h
 remaining_attempts = 5
 guessed_letters = ""
 
-def select_word():
-    with open('wordlist.txt') as f:
-        return str(random.choice(f.readlines())).lower()
-
-
-def print_hidden(hidden):
-    for c in secret_word:
-        if c in guessed_letters:
-            print(" {} ".format(c), end = "")
-        else:
-            print(" _ ", end = "")
-    print("\n")
-
-def check_letter(guess):
-    if len(guess) > 1 or not guess.isalpha():
-        print("Invalid input!")
-        return True
-    if guess in guessed_letters:
-        print("Invalid input!")
-        return True
-    if guess not in secret_word:
-        print("wrong")
-        return False
-    return True
-
-def check_win(word):
-    for c in word:
-        if c not in guessed_letters:
-            return False
-    return True
-
-secret_word = select_word()
+secret_word = h.select_word()
 print(secret_word)
 
 while remaining_attempts > 0:
-    print_hidden(secret_word)
+    h.print_hidden(secret_word, guessed_letters)
     print(guessed_letters)
     print(remaining_attempts)
     guess = input("Type a letter: ")
-    while not check_letter(guess):
+
+    while not h.check_letter(guess, secret_word, guessed_letters):
         remaining_attempts -= 1
         if remaining_attempts == 0:
             break
         print(remaining_attempts)
         guess = input("Type a letter: ")
+
     guessed_letters += guess
 
-    if check_win(secret_word):
+    if h.check_win(secret_word, guessed_letters):
         print("WIN!!")
         sys.exit()
 
