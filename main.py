@@ -1,11 +1,12 @@
 import random, sys
-words = ["tiger", "tree", "underground", "giraffe", "chair"]
 
 remaining_attempts = 5
 guessed_letters = ""
 
-def select_word(words):
-    return random.choice(words)
+def select_word():
+    with open('wordlist.txt') as f:
+        return str(random.choice(f.readlines())).lower()
+
 
 def print_hidden(hidden):
     for c in secret_word:
@@ -33,7 +34,7 @@ def check_win(word):
             return False
     return True
 
-secret_word = select_word(words)
+secret_word = select_word()
 print(secret_word)
 
 while remaining_attempts > 0:
