@@ -3,7 +3,7 @@ import random
 # selects random word from wordlist.txt and returns it in full lowercase
 def select_word():
     with open('wordlist.txt') as f:
-        return str(random.choice(f.readlines())).lower()
+        return str(random.choice(f.readlines())).lower().replace(" ", "").replace("\n", "")
 
 # iterates through each letter in the selected word s
 # and compares them with guessed letter list g
